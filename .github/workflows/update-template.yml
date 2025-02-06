@@ -1,0 +1,33 @@
+﻿name: Update Template on Clone
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual execution from GitHub Actions tab
+
+jobs:
+  update-template:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Replace Template Placeholders
+        run: |
+          PROJECT_NAME=$(basename `git rev-parse --show-toplevel`) # Get repo name as default project name
+          USER_NAME=$(git config --global user.name || echo "GitHub User") # Get GitHub user name
+
+          # Replace placeholders
+          find . -type f -exec sed -i "s/Your Name/$USER_NAME/g" {} +
+          find . -type f -exec sed -i "s/ProjectName/$PROJECT_NAME/g" {} +
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions Bot"
+          git add .
+          git commit -m "🔄 Auto-update template placeholders"
+          git push
+        continue-on-error: true # Avoid failure if no changes exist
