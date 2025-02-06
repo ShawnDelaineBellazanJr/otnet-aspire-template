@@ -1,0 +1,45 @@
+{
+    "$schema": "https://json.schemastore.org/template",
+    "author": "Your Name",
+    "classifications": [ "Aspire", "Microservices", "Web", "API" ],
+    "identity": "Aspire.Template",
+    "name": "Aspire Project Template",
+    "shortName": "aspire-template",
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "sourceName": "ProjectName",
+    "preferNameDirectory": true,
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "condition": "true",
+                    "rename": {
+                        "ProjectName": "{sourceName}"
+                    }
+                }
+            ]
+        }
+    ],
+    "primaryOutputs": [
+        {
+            "path": "ProjectName.sln"
+        }
+    ],
+    "postActions": [
+        {
+            "actionId": "C944779F-3D8B-4FB3-9F3D-BD78E7A7EF37",
+            "args": {
+                "executable": "dotnet",
+                "args": "restore"
+            },
+            "manualInstructions": [
+                {
+                    "text": "Run 'dotnet restore' to restore dependencies."
+                }
+            ]
+        }
+    ]
+}
